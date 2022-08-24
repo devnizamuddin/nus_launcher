@@ -31,6 +31,7 @@ class NusLauncherView extends GetView<NusLauncherController> {
             padding: const EdgeInsets.all(20),
             child: FutureBuilder(
               future: DeviceApps.getInstalledApplications(
+                includeAppIcons: true,
                 includeSystemApps: true,
                 onlyAppsWithLaunchIntent: true,
               ),
@@ -42,13 +43,22 @@ class NusLauncherView extends GetView<NusLauncherController> {
                     physics: const BouncingScrollPhysics(),
                     children: List.generate(
                       allApps.length,
-                      (index) => Text(
-                        allApps[index].appName,
-                        textAlign: TextAlign.center,
-                        style: const TextStyle(
-                          color: Colors.black,
-                        ),
-                        overflow: TextOverflow.ellipsis,
+                      (index) => Column(
+                        children: [
+                          Image.memory(
+                            (allApps[index] as ApplicationWithIcon).icon,
+                            width: 48,
+                          ),
+                          const SizedBox(height: 5),
+                          Text(
+                            allApps[index].appName,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              color: Colors.black,
+                            ),
+                            overflow: TextOverflow.ellipsis,
+                          )
+                        ],
                       ),
                     ),
                   );
