@@ -1,6 +1,6 @@
 # nus_launcher
 
-A new Flutter project.
+A new Flutter project for building Launcher Application For Android.
 
 ## Getting Started
 
