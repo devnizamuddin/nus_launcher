@@ -29,42 +29,66 @@ class NusLauncherView extends GetView<NusLauncherController> {
           ),
           Padding(
             padding: const EdgeInsets.all(20),
-            child: FutureBuilder(
-              future: DeviceApps.getInstalledApplications(
-                includeAppIcons: true,
-                includeSystemApps: true,
-                onlyAppsWithLaunchIntent: true,
-              ),
-              builder: (context, AsyncSnapshot<List<Application>> snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
-                  List<Application> allApps = snapshot.data!;
-                  return GridView.count(
-                    crossAxisCount: 4,
-                    physics: const BouncingScrollPhysics(),
-                    children: List.generate(
-                      allApps.length,
-                      (index) => Column(
-                        children: [
-                          Image.memory(
-                            (allApps[index] as ApplicationWithIcon).icon,
-                            width: 48,
-                          ),
-                          const SizedBox(height: 5),
-                          Text(
-                            allApps[index].appName,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              color: Colors.black,
+            child: Column(
+              children: [
+                Expanded(
+                  child: FutureBuilder(
+                    future: DeviceApps.getInstalledApplications(
+                      includeAppIcons: true,
+                      includeSystemApps: true,
+                      onlyAppsWithLaunchIntent: true,
+                    ),
+                    builder: (context, AsyncSnapshot<List<Application>> snapshot) {
+                      if (snapshot.connectionState == ConnectionState.done) {
+                        List<Application> allApps = snapshot.data!;
+                        return GridView.count(
+                          crossAxisCount: 4,
+                          physics: const BouncingScrollPhysics(),
+                          children: List.generate(
+                            allApps.length,
+                            (index) => Column(
+                              children: [
+                                Image.memory(
+                                  (allApps[index] as ApplicationWithIcon).icon,
+                                  width: 48,
+                                ),
+                                const SizedBox(height: 5),
+                                Text(
+                                  allApps[index].appName,
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                  ),
+                                  overflow: TextOverflow.ellipsis,
+                                )
+                              ],
                             ),
-                            overflow: TextOverflow.ellipsis,
-                          )
-                        ],
+                          ),
+                        );
+                      }
+                      return const Center(child: CircularProgressIndicator());
+                    },
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: TextFormField(
+                    decoration: InputDecoration(
+                      hintText: 'Search Here',
+                      suffixIcon: const Icon(Icons.search, color: Colors.grey),
+                      contentPadding: const EdgeInsets.fromLTRB(20, 5, 10, 5),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: const BorderSide(width: 1, color: Colors.grey),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(20),
+                        borderSide: const BorderSide(width: 1, color: Colors.grey),
                       ),
                     ),
-                  );
-                }
-                return const Center(child: CircularProgressIndicator());
-              },
+                  ),
+                ),
+              ],
             ),
           )
         ],
