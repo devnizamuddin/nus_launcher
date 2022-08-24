@@ -40,7 +40,17 @@ class NusLauncherView extends GetView<NusLauncherController> {
                   return GridView.count(
                     crossAxisCount: 4,
                     physics: const BouncingScrollPhysics(),
-                    children: List.generate(allApps.length, (index) => Text(allApps[index].appName)),
+                    children: List.generate(
+                      allApps.length,
+                      (index) => Text(
+                        allApps[index].appName,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          color: Colors.black,
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
                   );
                 }
                 return const Center(child: CircularProgressIndicator());
