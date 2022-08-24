@@ -1,3 +1,4 @@
+import 'package:device_apps/device_apps.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -28,6 +29,20 @@ class NusLauncherView extends GetView<NusLauncherController> {
           ),
           Padding(
             padding: const EdgeInsets.all(20),
+            child: FutureBuilder(
+              future: DeviceApps.getInstalledApplications(),
+              builder: (context, AsyncSnapshot<List<Application>> snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  List<Application> allApps = snapshot.data!;
+                  return GridView.count(
+                    crossAxisCount: 4,
+                    physics: const BouncingScrollPhysics(),
+                    children: List.generate(allApps.length, (index) => Text(allApps[index].appName)),
+                  );
+                }
+                return const Center(child: CircularProgressIndicator());
+              },
+            ),
           )
         ],
       ),
