@@ -30,7 +30,10 @@ class NusLauncherView extends GetView<NusLauncherController> {
           Padding(
             padding: const EdgeInsets.all(20),
             child: FutureBuilder(
-              future: DeviceApps.getInstalledApplications(),
+              future: DeviceApps.getInstalledApplications(
+                includeSystemApps: true,
+                onlyAppsWithLaunchIntent: true,
+              ),
               builder: (context, AsyncSnapshot<List<Application>> snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
                   List<Application> allApps = snapshot.data!;
