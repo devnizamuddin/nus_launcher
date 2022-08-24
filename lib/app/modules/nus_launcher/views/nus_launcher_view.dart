@@ -26,6 +26,9 @@ class NusLauncherView extends GetView<NusLauncherController> {
               ],
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.all(20),
+          )
         ],
       ),
     ));
