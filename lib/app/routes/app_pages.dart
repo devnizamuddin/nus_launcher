@@ -14,14 +14,14 @@ class AppPages {
 
   static final routes = [
     GetPage(
-      name: _Paths.HOME,
-      page: () => HomeView(),
-      binding: HomeBinding(),
+      name: _Paths.NUS_LAUNCHER,
+      page: () => const NusLauncherView(),
+      binding: NusLauncherBinding(),
     ),
     GetPage(
-      name: _Paths.NUS_LAUNCHER,
-      page: () => NusLauncherView(),
-      binding: NusLauncherBinding(),
+      name: _Paths.HOME,
+      page: () => const HomeView(),
+      binding: HomeBinding(),
     ),
   ];
 }

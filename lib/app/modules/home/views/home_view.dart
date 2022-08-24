@@ -11,7 +11,9 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
-      child: PageView(),
+      child: Column(
+        children: const [],
+      ),
     ));
   }
 }
