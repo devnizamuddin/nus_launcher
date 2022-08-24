@@ -11,8 +11,18 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SafeArea(
-      child: Column(
-        children: const [],
+      child: Container(
+        color: Colors.white,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            Text(
+              'NUS',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
+            ),
+            Text('Launcher', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32)),
+          ],
+        ),
       ),
     ));
   }
