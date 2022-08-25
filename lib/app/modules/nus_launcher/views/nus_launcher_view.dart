@@ -38,52 +38,62 @@ class NusLauncherView extends GetView<NusLauncherController> {
                             ? GridView.count(
                                 crossAxisCount: 4,
                                 physics: const BouncingScrollPhysics(),
-                                children: List.generate(
-                                  controller.applicationList.value.length,
-                                  (index) => Column(
-                                    children: [
-                                      Image.memory(
-                                        (controller.applicationList.value[index] as ApplicationWithIcon).icon,
-                                        width: 48,
-                                      ),
-                                      const SizedBox(height: 5),
-                                      Text(
-                                        controller.applicationList.value[index].appName,
-                                        textAlign: TextAlign.center,
-                                        style: const TextStyle(
-                                          color: Colors.black,
+                                children: List.generate(controller.applicationList.value.length, (index) {
+                                  Application application = controller.applicationList.value[index];
+                                  return GestureDetector(
+                                    onTap: () {
+                                      DeviceApps.openApp(application.packageName);
+                                    },
+                                    child: Column(
+                                      children: [
+                                        Image.memory(
+                                          (controller.applicationList.value[index] as ApplicationWithIcon).icon,
+                                          width: 48,
                                         ),
-                                        overflow: TextOverflow.ellipsis,
-                                      )
-                                    ],
-                                  ),
-                                ),
+                                        const SizedBox(height: 5),
+                                        Text(
+                                          controller.applicationList.value[index].appName,
+                                          textAlign: TextAlign.center,
+                                          style: const TextStyle(
+                                            color: Colors.black,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                        )
+                                      ],
+                                    ),
+                                  );
+                                }),
                               )
                             : controller.searchList.value!.isEmpty
                                 ? const Center(child: CircularProgressIndicator())
                                 : GridView.count(
                                     crossAxisCount: 4,
                                     physics: const BouncingScrollPhysics(),
-                                    children: List.generate(
-                                      controller.searchList.value?.length ?? 0,
-                                      (index) => Column(
-                                        children: [
-                                          Image.memory(
-                                            (controller.searchList.value?[index] as ApplicationWithIcon).icon,
-                                            width: 48,
-                                          ),
-                                          const SizedBox(height: 5),
-                                          Text(
-                                            controller.searchList.value?[index].appName ?? '',
-                                            textAlign: TextAlign.center,
-                                            style: const TextStyle(
-                                              color: Colors.black,
+                                    children: List.generate(controller.searchList.value?.length ?? 0, (index) {
+                                      Application application = controller.applicationList.value[index];
+                                      return GestureDetector(
+                                        onTap: () {
+                                          DeviceApps.openApp(application.packageName);
+                                        },
+                                        child: Column(
+                                          children: [
+                                            Image.memory(
+                                              (controller.searchList.value?[index] as ApplicationWithIcon).icon,
+                                              width: 48,
                                             ),
-                                            overflow: TextOverflow.ellipsis,
-                                          )
-                                        ],
-                                      ),
-                                    ),
+                                            const SizedBox(height: 5),
+                                            Text(
+                                              controller.searchList.value?[index].appName ?? '',
+                                              textAlign: TextAlign.center,
+                                              style: const TextStyle(
+                                                color: Colors.black,
+                                              ),
+                                              overflow: TextOverflow.ellipsis,
+                                            )
+                                          ],
+                                        ),
+                                      );
+                                    }),
                                   ))),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
