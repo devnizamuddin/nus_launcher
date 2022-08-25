@@ -7,6 +7,8 @@ class NusLauncherController extends GetxController {
   Rx<List<Application>?> searchList = Rx(null);
   late TextEditingController searchController;
 
+  DateTime dateTime = DateTime.now();
+
   getAllApplication() async {
     applicationList.value = await DeviceApps.getInstalledApplications(
       includeAppIcons: true,

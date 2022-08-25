@@ -2,6 +2,8 @@ import 'package:device_apps/device_apps.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:nus_launcher/app/config/app_assets.dart';
+import 'package:nus_launcher/app/utils/date.dart';
 
 import '../controllers/nus_launcher_controller.dart';
 
@@ -10,20 +12,40 @@ class NusLauncherView extends GetView<NusLauncherController> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
         body: SafeArea(
       child: PageView(
         children: [
           Container(
-            color: Colors.white,
+            color: Colors.grey[200],
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Text(
-                  'NUS',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32),
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            getFormatedTime(controller.dateTime),
+                            style: TextStyle(fontSize: 24),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            getFormatedDate(controller.dateTime),
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
-                Text('Launcher', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 32)),
+                //Image(height: width / 2, width: width / 2, image: AssetImage(AppAssets.ASSET_NUS_LAUNCHER_LOGO))
               ],
             ),
           ),
