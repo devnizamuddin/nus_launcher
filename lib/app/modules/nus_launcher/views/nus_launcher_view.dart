@@ -32,47 +32,64 @@ class NusLauncherView extends GetView<NusLauncherController> {
             child: Column(
               children: [
                 Expanded(
-                  child: FutureBuilder(
-                    future: DeviceApps.getInstalledApplications(
-                      includeAppIcons: true,
-                      includeSystemApps: true,
-                      onlyAppsWithLaunchIntent: true,
-                    ),
-                    builder: (context, AsyncSnapshot<List<Application>> snapshot) {
-                      if (snapshot.connectionState == ConnectionState.done) {
-                        List<Application> allApps = snapshot.data!;
-                        return GridView.count(
-                          crossAxisCount: 4,
-                          physics: const BouncingScrollPhysics(),
-                          children: List.generate(
-                            allApps.length,
-                            (index) => Column(
-                              children: [
-                                Image.memory(
-                                  (allApps[index] as ApplicationWithIcon).icon,
-                                  width: 48,
-                                ),
-                                const SizedBox(height: 5),
-                                Text(
-                                  allApps[index].appName,
-                                  textAlign: TextAlign.center,
-                                  style: const TextStyle(
-                                    color: Colors.black,
+                    child: Obx(() => (controller.applicationList.value.isEmpty)
+                        ? const Center(child: CircularProgressIndicator())
+                        : controller.searchList.value == null
+                            ? GridView.count(
+                                crossAxisCount: 4,
+                                physics: const BouncingScrollPhysics(),
+                                children: List.generate(
+                                  controller.applicationList.value.length,
+                                  (index) => Column(
+                                    children: [
+                                      Image.memory(
+                                        (controller.applicationList.value[index] as ApplicationWithIcon).icon,
+                                        width: 48,
+                                      ),
+                                      const SizedBox(height: 5),
+                                      Text(
+                                        controller.applicationList.value[index].appName,
+                                        textAlign: TextAlign.center,
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                      )
+                                    ],
                                   ),
-                                  overflow: TextOverflow.ellipsis,
-                                )
-                              ],
-                            ),
-                          ),
-                        );
-                      }
-                      return const Center(child: CircularProgressIndicator());
-                    },
-                  ),
-                ),
+                                ),
+                              )
+                            : controller.searchList.value!.isEmpty
+                                ? const Center(child: CircularProgressIndicator())
+                                : GridView.count(
+                                    crossAxisCount: 4,
+                                    physics: const BouncingScrollPhysics(),
+                                    children: List.generate(
+                                      controller.searchList.value?.length ?? 0,
+                                      (index) => Column(
+                                        children: [
+                                          Image.memory(
+                                            (controller.searchList.value?[index] as ApplicationWithIcon).icon,
+                                            width: 48,
+                                          ),
+                                          const SizedBox(height: 5),
+                                          Text(
+                                            controller.searchList.value?[index].appName ?? '',
+                                            textAlign: TextAlign.center,
+                                            style: const TextStyle(
+                                              color: Colors.black,
+                                            ),
+                                            overflow: TextOverflow.ellipsis,
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ))),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: TextFormField(
+                    controller: controller.searchController,
+                    onChanged: controller.onChangeWhenTypeSearch,
                     decoration: InputDecoration(
                       hintText: 'Search Here',
                       suffixIcon: const Icon(Icons.search, color: Colors.grey),
