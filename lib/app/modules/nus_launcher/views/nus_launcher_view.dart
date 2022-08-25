@@ -2,7 +2,7 @@ import 'package:device_apps/device_apps.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
-import 'package:nus_launcher/app/config/app_assets.dart';
+import 'package:nus_launcher/app/components/all_apps_view.dart';
 import 'package:nus_launcher/app/utils/date.dart';
 
 import '../controllers/nus_launcher_controller.dart';
@@ -12,8 +12,8 @@ class NusLauncherView extends GetView<NusLauncherController> {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
+    // double height = MediaQuery.of(context).size.height;
+    // double width = MediaQuery.of(context).size.width;
     return Scaffold(
         body: SafeArea(
       child: PageView(
@@ -57,41 +57,44 @@ class NusLauncherView extends GetView<NusLauncherController> {
                     child: Obx(() => (controller.applicationList.value.isEmpty)
                         ? const Center(child: CircularProgressIndicator())
                         : controller.searchList.value == null
-                            ? GridView.count(
-                                crossAxisCount: 4,
-                                physics: const BouncingScrollPhysics(),
-                                children: List.generate(controller.applicationList.value.length, (index) {
-                                  Application application = controller.applicationList.value[index];
-                                  return GestureDetector(
-                                    onTap: () {
-                                      DeviceApps.openApp(application.packageName);
-                                    },
-                                    child: Column(
-                                      children: [
-                                        Image.memory(
-                                          (controller.applicationList.value[index] as ApplicationWithIcon).icon,
-                                          width: 48,
-                                        ),
-                                        const SizedBox(height: 5),
-                                        Text(
-                                          controller.applicationList.value[index].appName,
-                                          textAlign: TextAlign.center,
-                                          style: const TextStyle(
-                                            color: Colors.black,
-                                          ),
-                                          overflow: TextOverflow.ellipsis,
-                                        )
-                                      ],
-                                    ),
-                                  );
-                                }),
-                              )
+                            ?
+                            //  GridView.count(
+                            //     crossAxisCount: 4,
+                            //     physics: const BouncingScrollPhysics(),
+                            //     children: List.generate(controller.applicationList.value.length, (index) {
+                            //       Application application = controller.applicationList.value[index];
+                            //       return GestureDetector(
+                            //         onTap: () {
+                            //           DeviceApps.openApp(application.packageName);
+                            //         },
+                            //         child: Column(
+                            //           children: [
+                            //             Image.memory(
+                            //               (controller.applicationList.value[index] as ApplicationWithIcon).icon,
+                            //               width: 48,
+                            //             ),
+                            //             const SizedBox(height: 5),
+                            //             Text(
+                            //               controller.applicationList.value[index].appName,
+                            //               textAlign: TextAlign.center,
+                            //               style: const TextStyle(
+                            //                 color: Colors.black,
+                            //               ),
+                            //               overflow: TextOverflow.ellipsis,
+                            //             )
+                            //           ],
+                            //         ),
+                            //       );
+                            //     }),
+                            //   )
+                            AllAppsView(applicationList: controller.applicationList)
                             : controller.searchList.value!.isEmpty
                                 ? const Center(child: CircularProgressIndicator())
                                 : GridView.count(
                                     crossAxisCount: 4,
                                     physics: const BouncingScrollPhysics(),
                                     children: List.generate(controller.searchList.value?.length ?? 0, (index) {
+                                      debugPrint('Viewing SearchView');
                                       Application application = controller.applicationList.value[index];
                                       return GestureDetector(
                                         onTap: () {

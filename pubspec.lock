@@ -200,6 +200,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.0.0"
+  reorderable_grid_view:
+    dependency: "direct main"
+    description:
+      name: reorderable_grid_view
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.2.4"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -277,4 +284,4 @@ packages:
     version: "3.1.1"
 sdks:
   dart: ">=2.17.5 <3.0.0"
-  flutter: ">=1.10.0"
+  flutter: ">=1.17.0"

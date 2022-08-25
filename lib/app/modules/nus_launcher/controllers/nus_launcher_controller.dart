@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class NusLauncherController extends GetxController {
-  Rx<List<Application>> applicationList = Rx([]);
+  RxList<Application> applicationList = <Application>[].obs;
   Rx<List<Application>?> searchList = Rx(null);
   late TextEditingController searchController;
 
