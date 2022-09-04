@@ -20,7 +20,7 @@ class AllAppsView extends StatelessWidget {
               children: applicationList
                   .map((application) => Card(
                         key: ValueKey(application),
-                        child: Column(children: [
+                        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
                           Image.memory((application as ApplicationWithIcon).icon, width: 48),
                           const SizedBox(height: 5),
                           Text(
