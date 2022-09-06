@@ -19,26 +19,26 @@ class NusLauncherView extends GetView<NusLauncherController> {
     return Scaffold(
       body: SafeArea(
         child: Stack(children: [
-          Opacity(
-            opacity: 0.8,
-            child: Container(
-              height: double.maxFinite,
-              child: controller.byteWallpaper.value == null
-                  ? Container(
-                      height: 120,
-                      width: 140,
-                      child: Text('Hello Wrold'),
-                    )
-                  : Obx(
-                      () => Container(
-                        child: Image.memory(
-                          controller.byteWallpaper.value!,
-                          fit: BoxFit.fill,
+          Obx(() => Opacity(
+                opacity: 0.8,
+                child: Container(
+                  height: double.maxFinite,
+                  child: controller.byteWallpaper.value == null
+                      ? Container(
+                          height: 120,
+                          width: 140,
+                          child: Text('Hello Wrold'),
+                        )
+                      : Container(
+                          height: double.maxFinite,
+                          width: double.maxFinite,
+                          child: Image.memory(
+                            controller.byteWallpaper.value!,
+                            fit: BoxFit.fill,
+                          ),
                         ),
-                      ),
-                    ),
-            ),
-          ),
+                ),
+              )),
           PageView(
             children: [
               Column(
