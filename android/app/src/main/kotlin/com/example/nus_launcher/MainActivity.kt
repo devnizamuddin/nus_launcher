@@ -26,34 +26,41 @@ class MainActivity : FlutterActivity() {
             if (call.method == "getWallpaper") {
 //                val arguments = call.arguments<Map<String, String>>()
 //                val name = arguments?.get("name")
-             val byteArrayWallPaper =    getCurrentWallpaper()
+                val byteArrayWallPaper = getCurrentWallpaper()
                 result.success(byteArrayWallPaper)
 
             }
         }
     }
 
-    private fun getCurrentWallpaper(): ByteArray {
+    private fun getCurrentWallpaper(): ByteArray? {
 
         val wallpaperManager = WallpaperManager.getInstance(this)
-        if (ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.READ_EXTERNAL_STORAGE
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
+        if (checkStoragePermission())
+        {
 
+            val wallpaperDrawable = wallpaperManager.drawable
+            val bitmap: Bitmap = (wallpaperDrawable as BitmapDrawable).bitmap
+            val stream = ByteArrayOutputStream()
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+            return stream.toByteArray()
+
+        }
+        else{
             ActivityCompat.requestPermissions(
                 this,
                 arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
                 2
             )
-
         }
-        val wallpaperDrawable = wallpaperManager.drawable
-        val bitmap: Bitmap = (wallpaperDrawable as BitmapDrawable).bitmap
-        val stream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
-        return stream.toByteArray()
+        return null;
+    }
+
+    private fun checkStoragePermission(): Boolean {
+        return ActivityCompat.checkSelfPermission(
+            this,
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        ) == PackageManager.PERMISSION_GRANTED
     }
 
     override fun onRequestPermissionsResult(
@@ -64,7 +71,8 @@ class MainActivity : FlutterActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
 
         if ((grantResults.isNotEmpty() &&
-                    grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                    grantResults[0] == PackageManager.PERMISSION_GRANTED)
+        ) {
             getCurrentWallpaper()
         } else {
             // Explain to the user that the feature is unavailable because

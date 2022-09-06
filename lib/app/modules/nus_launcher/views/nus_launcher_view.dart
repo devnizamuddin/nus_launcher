@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:device_apps/device_apps.dart';
 import 'package:flutter/material.dart';
 
@@ -20,14 +18,14 @@ class NusLauncherView extends GetView<NusLauncherController> {
       body: SafeArea(
         child: Stack(children: [
           Obx(() => Opacity(
-                opacity: 0.8,
+                opacity: 1,
                 child: Container(
                   height: double.maxFinite,
                   child: controller.byteWallpaper.value == null
                       ? Container(
                           height: 120,
                           width: 140,
-                          child: Text('Hello Wrold'),
+                          child: Text(''),
                         )
                       : Container(
                           height: double.maxFinite,

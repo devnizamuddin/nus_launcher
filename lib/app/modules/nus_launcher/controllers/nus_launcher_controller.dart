@@ -21,7 +21,9 @@ class NusLauncherController extends GetxController {
     // };
     //await wallpaperChannel.invokeListMethod('getWallpaper', arguments);
     byteWallpaper.value = await wallpaperChannel.invokeMethod('getWallpaper');
-
+    if (byteWallpaper.value == null) {
+      getWallpaper();
+    }
     debugPrint('String image = $byteWallpaper');
   }
 
